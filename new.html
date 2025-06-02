@@ -137,19 +137,22 @@
       alert("حداقل یک فیلد باید پر شود.");
       return;
     }
+fetch("https://script.google.com/macros/s/AKfycbz5htQl7EbSo2t-FRWTQJ9OBPJ-e0CsUvLI-bZLiIl_w6lNXWzRsE4JFOlXk1UIGBN6/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(dataToSend)
+})
+.then(() => {
+  alert("اطلاعات با موفقیت ارسال شد.");
+  form.reset();
+})
+.catch(err => {
+  alert("خطا در ارسال اطلاعات");
+  console.error(err);
+});
 
-    const query = new URLSearchParams(dataToSend).toString();
-    const url = "https://script.google.com/macros/s/AKfycby5vt9rswTOvjw5j7BFQFWRAC4tvhYDM36tm7ZbZXlMY24jQcnjG_v0JP3x50P7Uc7C/exec?" + query;
-
-    fetch(url)
-      .then(() => {
-        alert("اطلاعات با موفقیت ارسال شد.");
-        form.reset();
-      })
-      .catch(err => {
-        alert("خطا در ارسال اطلاعات");
-        console.error(err);
-      });
   });
 </script>
 
