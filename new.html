@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>فرم ورود اطلاعات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      direction: rtl;
+      font-family: sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(to top, #444, #000);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to top, #333, #111);
+    }
+  </style>
+</head>
+<body>
+
+<h2>فرم ورود اطلاعات</h2>
+
+<form id="dataForm">
+  <label>سال مورد نظر:
+    <input type="text" name="سال مورد نظر">
+  </label>
+  <label>تاریخ ورود به موسسه:
+    <input type="text" name="تاریخ ورود به موسسه">
+  </label>
+    <label>نام شرکت:
+    <input type="text" name="نام شرکت">
+  </label>
+  <label>برگه تشخیص دارد؟
+    <input type="text" name="برگه تشخیص دارد؟">
+  </label>
+  <label>تاریخ صدور برگه تشخیص
+    <input type="text" name="تاریخ صدور برگه تشخیص">
+  </label>
+  <label>اعتراض شده؟
+    <input type="text" name="اعتراض شده؟">
+  </label>
+<label>مهلت اعتراض:
+    <input type="text" name="مهلت اعتراض">
+  </label>
+<label>گزارش رسیدگی دارد؟
+    <input type="text" name="گزارش رسیدگی دارد؟">
+  </label>
+<label>تاریخ ارسال لایحه
+    <input type="text" name="تاریخ ارسال لایحه">
+  </label>
+  <label>تاریخ ورود به ماده ۲۳۸
+    <input type="text" name="تاریخ ورود به ماده ۲۳۸">
+  </label>
+  <label>مهلت توافق
+    <input type="text" name="مهلت توافق">
+  </label>
+  <label>نتیجه توافق؟
+    <input type="text" name="نتیجه توافق؟">
+  </label>
+  <label>تاریخ جلسه هیأت بدوی
+    <input type="text" name="تاریخ جلسه هیأت بدوی">
+  </label>
+<label>رای هیات بدوی
+    <input type="text" name="رای هیات بدوی">
+  </label>
+  <label>تاریخ صدور رای
+    <input type="text" name="تاریخ صدور رای">
+
+  </label><label>مهلت اعتراض به رأی
+    <input type="text" name="مهلت اعتراض به رأی">
+  </label>
+  </label><label>اعتراض به رأی بدوی
+    <input type="text" name="اعتراض به رأی بدوی">
+  </label>
+  </label><!--<label>
+    <input type="text" name="">
+  </label>
+<label>
+    <input type="text" name="">
+  </label>
+  <label>
+    <input type="text" name="">
+  </label>
+  <label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label><label>
+    <input type="text" name="">
+  </label>
+-->
+  <!-- ادامه فیلدهای لازم دقیقا به ترتیب ستون‌های گوگل شیت -->
+  <button type="submit">ارسال</button>
+</form>
+
+<script>
+  const form = document.getElementById('dataForm');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const inputs = Array.from(form.querySelectorAll('input'));
+    const dataToSend = {};
+    let stop = false;
+
+    for (let input of inputs) {
+      const name = input.name;
+      const value = input.value.trim();
+
+      if (stop && value !== "") {
+        alert("لطفاً فیلدها را به ترتیب پر کنید. فیلد خالی نباید بین فیلدهای پر شده باشد.");
+        return;
+      }
+
+      if (value === "") {
+        stop = true; // از این به بعد اگر چیزی پر شد، خطا می‌گیریم
+      } else {
+        dataToSend[name] = value;
+      }
+    }
+
+    if (Object.keys(dataToSend).length === 0) {
+      alert("حداقل یک فیلد باید پر شود.");
+      return;
+    }
+
+   fetch('https://script.google.com/macros/s/AKfycbzLPcB4rsM1kpyoR_JgD9LyvAXDRFy9NS8e5hbyC_xGkoxOVvAHqKN-9wdpVNVLeizr/exec', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(Object.fromEntries(new FormData(form)))
+})
+.then(res => res.text())
+.then(response => {
+  alert('اطلاعات با موفقیت ارسال شد:\n' + response);
+  form.reset();
+})
+.catch(err => {
+  alert('خطا در ارسال اطلاعات');
+  console.error(err);
+});
+
+  });
+</script>
+
+</body>
+</html>
