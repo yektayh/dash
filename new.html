@@ -137,7 +137,7 @@
       alert("حداقل یک فیلد باید پر شود.");
       return;
     }
-fetch("https://shahreargham.com/post-to-sheet.php", {
+fetch("https://shahragham/post-to-sheet.php", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -145,15 +145,14 @@ fetch("https://shahreargham.com/post-to-sheet.php", {
   body: JSON.stringify(dataToSend)
 })
 .then(res => res.json())
-.then(response => {
-  alert(response.message);
+.then(data => {
+  alert("اطلاعات با موفقیت ارسال شد.");
   form.reset();
 })
 .catch(err => {
-  alert("خطا در ارتباط با سرور");
   console.error(err);
+  alert("خطا در ارسال اطلاعات");
 });
-
 
   });
 </script>
