@@ -58,101 +58,62 @@
   <label>تاریخ ورود به موسسه:
     <input type="text" name="تاریخ ورود به موسسه">
   </label>
-    <label>نام شرکت:
+  <label>نام شرکت:
     <input type="text" name="نام شرکت">
   </label>
   <label>برگه تشخیص دارد؟
     <input type="text" name="برگه تشخیص دارد؟">
   </label>
-  <label>تاریخ صدور برگه تشخیص
+  <label>تاریخ صدور برگه تشخیص:
     <input type="text" name="تاریخ صدور برگه تشخیص">
   </label>
   <label>اعتراض شده؟
     <input type="text" name="اعتراض شده؟">
   </label>
-<label>مهلت اعتراض:
+  <label>مهلت اعتراض:
     <input type="text" name="مهلت اعتراض">
   </label>
-<label>گزارش رسیدگی دارد؟
+  <label>گزارش رسیدگی دارد؟
     <input type="text" name="گزارش رسیدگی دارد؟">
   </label>
-<label>تاریخ ارسال لایحه
+  <label>تاریخ ارسال لایحه:
     <input type="text" name="تاریخ ارسال لایحه">
   </label>
-  <label>تاریخ ورود به ماده ۲۳۸
+  <label>تاریخ ورود به ماده ۲۳۸:
     <input type="text" name="تاریخ ورود به ماده ۲۳۸">
   </label>
-  <label>مهلت توافق
+  <label>مهلت توافق:
     <input type="text" name="مهلت توافق">
   </label>
   <label>نتیجه توافق؟
     <input type="text" name="نتیجه توافق؟">
   </label>
-  <label>تاریخ جلسه هیأت بدوی
+  <label>تاریخ جلسه هیأت بدوی:
     <input type="text" name="تاریخ جلسه هیأت بدوی">
   </label>
-<label>رای هیات بدوی
+  <label>رای هیات بدوی:
     <input type="text" name="رای هیات بدوی">
   </label>
-  <label>تاریخ صدور رای
+  <label>تاریخ صدور رای:
     <input type="text" name="تاریخ صدور رای">
-
-  </label><label>مهلت اعتراض به رأی
+  </label>
+  <label>مهلت اعتراض به رأی:
     <input type="text" name="مهلت اعتراض به رأی">
   </label>
-  </label><label>اعتراض به رأی بدوی
+  <label>اعتراض به رأی بدوی:
     <input type="text" name="اعتراض به رأی بدوی">
   </label>
-  </label><!--<label>
-    <input type="text" name="">
-  </label>
-<label>
-    <input type="text" name="">
-  </label>
-  <label>
-    <input type="text" name="">
-  </label>
-  <label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label><label>
-    <input type="text" name="">
-  </label>
--->
-  <!-- ادامه فیلدهای لازم دقیقا به ترتیب ستون‌های گوگل شیت -->
+
   <button type="submit">ارسال</button>
 </form>
 
 <script>
-  const form = document.getElementById('dataForm');
+  const form = document.getElementById("dataForm");
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const inputs = Array.from(form.querySelectorAll('input'));
+    const inputs = Array.from(form.querySelectorAll("input"));
     const dataToSend = {};
     let stop = false;
 
@@ -166,7 +127,7 @@
       }
 
       if (value === "") {
-        stop = true; // از این به بعد اگر چیزی پر شد، خطا می‌گیریم
+        stop = true;
       } else {
         dataToSend[name] = value;
       }
@@ -176,22 +137,21 @@
       alert("حداقل یک فیلد باید پر شود.");
       return;
     }
-
-   fetch('https://script.google.com/macros/s/AKfycbzLPcB4rsM1kpyoR_JgD9LyvAXDRFy9NS8e5hbyC_xGkoxOVvAHqKN-9wdpVNVLeizr/exec', {
-  method: 'POST',
+fetch("https://shahreargham.com/f.php", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   },
-  body: JSON.stringify(Object.fromEntries(new FormData(form)))
+    body: JSON.stringify({ name: "آزمایش" }
 })
-.then(res => res.text())
-.then(response => {
-  alert('اطلاعات با موفقیت ارسال شد:\n' + response);
+.then(res => res.json())
+.then(data => {
+  alert("اطلاعات با موفقیت ارسال شد.");
   form.reset();
 })
 .catch(err => {
-  alert('خطا در ارسال اطلاعات');
   console.error(err);
+  alert("خطا در ارسال اطلاعات");
 });
 
   });
