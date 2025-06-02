@@ -137,21 +137,23 @@
       alert("حداقل یک فیلد باید پر شود.");
       return;
     }
-fetch("https://script.google.com/macros/s/AKfycbz5htQl7EbSo2t-FRWTQJ9OBPJ-e0CsUvLI-bZLiIl_w6lNXWzRsE4JFOlXk1UIGBN6/exec", {
+fetch("https://shahreargham.com/post-to-sheet.php", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
   },
   body: JSON.stringify(dataToSend)
 })
-.then(() => {
-  alert("اطلاعات با موفقیت ارسال شد.");
+.then(res => res.json())
+.then(response => {
+  alert(response.message);
   form.reset();
 })
 .catch(err => {
-  alert("خطا در ارسال اطلاعات");
+  alert("خطا در ارتباط با سرور");
   console.error(err);
 });
+
 
   });
 </script>
