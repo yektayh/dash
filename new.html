@@ -177,20 +177,19 @@
       return;
     }
 
-   fetch('https://script.google.com/macros/s/AKfycbzLPcB4rsM1kpyoR_JgD9LyvAXDRFy9NS8e5hbyC_xGkoxOVvAHqKN-9wdpVNVLeizr/exec', {
+   fetch('https://script.google.com/macros/s/AKfycby5vt9rswTOvjw5j7BFQFWRAC4tvhYDM36tm7ZbZXlMY24jQcnjG_v0JP3x50P7Uc7C/exec', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify(Object.fromEntries(new FormData(form)))
 })
-.then(res => res.text())
-.then(response => {
-  alert('اطلاعات با موفقیت ارسال شد:\n' + response);
+.then(() => {
+  alert('اطلاعات با موفقیت ارسال شد.');
   form.reset();
 })
 .catch(err => {
-  alert('خطا در ارسال اطلاعات');
+  alert('خطا در ارسال اطلاعات.');
   console.error(err);
 });
 
