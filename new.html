@@ -45,6 +45,13 @@
     button:hover {
       background: linear-gradient(to top, #333, #111);
     }
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .success { color: green; }
+    .error { color: red; }
   </style>
 </head>
 <body>
@@ -52,108 +59,57 @@
 <h2>فرم ورود اطلاعات</h2>
 
 <form id="dataForm">
-  <label>سال مورد نظر:
-    <input type="text" name="سال مورد نظر">
+  <label>نام شرکت:
+    <input type="text" name="نام شرکت" required>
   </label>
   <label>تاریخ ورود به موسسه:
     <input type="text" name="تاریخ ورود به موسسه">
   </label>
-  <label>نام شرکت:
-    <input type="text" name="نام شرکت">
-  </label>
   <label>برگه تشخیص دارد؟
     <input type="text" name="برگه تشخیص دارد؟">
   </label>
-  <label>تاریخ صدور برگه تشخیص:
-    <input type="text" name="تاریخ صدور برگه تشخیص">
-  </label>
-  <label>اعتراض شده؟
-    <input type="text" name="اعتراض شده؟">
-  </label>
-  <label>مهلت اعتراض:
-    <input type="text" name="مهلت اعتراض">
-  </label>
-  <label>گزارش رسیدگی دارد؟
-    <input type="text" name="گزارش رسیدگی دارد؟">
-  </label>
-  <label>تاریخ ارسال لایحه:
-    <input type="text" name="تاریخ ارسال لایحه">
-  </label>
-  <label>تاریخ ورود به ماده ۲۳۸:
-    <input type="text" name="تاریخ ورود به ماده ۲۳۸">
-  </label>
-  <label>مهلت توافق:
-    <input type="text" name="مهلت توافق">
-  </label>
-  <label>نتیجه توافق؟
-    <input type="text" name="نتیجه توافق؟">
-  </label>
-  <label>تاریخ جلسه هیأت بدوی:
-    <input type="text" name="تاریخ جلسه هیأت بدوی">
-  </label>
-  <label>رای هیات بدوی:
-    <input type="text" name="رای هیات بدوی">
-  </label>
-  <label>تاریخ صدور رای:
-    <input type="text" name="تاریخ صدور رای">
-  </label>
-  <label>مهلت اعتراض به رأی:
-    <input type="text" name="مهلت اعتراض به رأی">
-  </label>
-  <label>اعتراض به رأی بدوی:
-    <input type="text" name="اعتراض به رأی بدوی">
-  </label>
+  <!-- هر فیلدی که خواستی، اضافه کن با name مناسب -->
 
   <button type="submit">ارسال</button>
 </form>
 
+<div class="message" id="statusMessage"></div>
+
 <script>
   const form = document.getElementById("dataForm");
+  const message = document.getElementById("statusMessage");
 
-  form.addEventListener("submit", function(e) {
+  form.addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const inputs = Array.from(form.querySelectorAll("input"));
-    const dataToSend = {};
-    let stop = false;
+    const data = {};
+    const inputs = form.querySelectorAll("input");
+    inputs.forEach(input => {
+      data[input.name] = input.value.trim();
+    });
 
-    for (let input of inputs) {
-      const name = input.name;
-      const value = input.value.trim();
+    try {
+      const response = await fetch("https://shahreargham.com/f.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
 
-      if (stop && value !== "") {
-        alert("لطفاً فیلدها را به ترتیب پر کنید. فیلد خالی نباید بین فیلدهای پر شده باشد.");
-        return;
-      }
+      const result = await response.json();
 
-      if (value === "") {
-        stop = true;
+      if (result.result === "success") {
+        message.textContent = "✅ اطلاعات با موفقیت ثبت شد.";
+        message.className = "message success";
+        form.reset();
       } else {
-        dataToSend[name] = value;
+        message.textContent = "❌ خطا: " + result.message;
+        message.className = "message error";
       }
+    } catch (err) {
+      console.error(err);
+      message.textContent = "❌ خطا در اتصال به سرور.";
+      message.className = "message error";
     }
-
-    if (Object.keys(dataToSend).length === 0) {
-      alert("حداقل یک فیلد باید پر شود.");
-      return;
-    }
-fetch("https://shahreargham.com/f.php", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(dataToSend)
-})
-.then(res => res.json())
-.then(data => {
-  alert("اطلاعات با موفقیت ارسال شد.");
-  form.reset();
-})
-.catch(err => {
-  console.error(err);
-  alert("خطا در ارسال اطلاعات");
-});
-
   });
 </script>
 
