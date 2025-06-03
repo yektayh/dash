@@ -142,7 +142,7 @@ fetch("https://shahreargham.com/f.php", {
   headers: {
     "Content-Type": "application/json"
   },
-    body: JSON.stringify({ name: "آزمایش" }
+  body: JSON.stringify(dataToSend)
 })
 .then(res => res.json())
 .then(data => {
